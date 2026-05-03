@@ -30,13 +30,13 @@ new class extends Component
 <div class="flex flex-col min-h-screen justify-center items-center pb-20">
     <div class="space-y-4 min-w-full sm:min-w-fit">
         {{-- back button --}}
-        <a href="/" class="flex gap-2 items-center text-primary font-medium rounded-lg hover:bg-green hover:text-white px-3 py-1 w-fit">
+        <a wire:navigate href="/" class="flex gap-2 items-center text-primary font-medium rounded-lg hover:bg-green hover:text-white px-3 py-1 w-fit">
             <x-icons.back size="size-3.5"/>
             <span>Back</span>
         </a>
         {{-- form container --}}
         <form wire:submit="authenticate">
-            <div class="flex flex-col gap-1 justify-center items-center rounded-xl border-2 border-muted/30 bg-white px-5 pt-8 pb-9 w-full sm:w-sm">
+            <div class="flex flex-col gap-1 justify-center items-center rounded-xl border-2 border-muted/30 bg-white sm:px-5 p-6 sm:pt-8 sm:pb-9 w-full sm:w-sm">
                 {{-- login icon --}}
                 <div class="bg-green rounded-xl px-3 py-2.5 text-white w-fit">
                     <x-icons.login/>
@@ -49,15 +49,12 @@ new class extends Component
                     Sign in to manage assessment data
                 </div>
                 {{-- email field --}}
-                <label class="text-primary font-medium text-sm mt-6 w-full tracking-wide">Email</label>
-                <input wire:model="email" type="email" placeholder="youremail@mail.com"
-                    class="mt-1 w-full border border-muted/30 bg-background rounded-lg px-3 py-2 font-normal text-primary focus:border-primary/50 focus:ring-1 focus:ring-primary/50">
-                @error('email') <span class="text-red-500 text-xs mt-1 self-start">{{ $message }}</span> @enderror
+                <x-label-input class="mt-6" label="Email" propertyName="email" type="email" placeholder="youremail@mail.com" />
                 {{-- password field --}}
                 <label class="text-primary font-medium text-sm mt-4 w-full tracking-wide">Password</label>
                 <div class="relative w-full mt-1" x-data="{ show: false }">
                     <input wire:model="password" :type="show ? 'text' : 'password'" placeholder="yourpassword"
-                        class="w-full border border-muted/30 bg-background rounded-lg px-3 py-2 pr-10 font-normal text-primary focus:border-primary/50 focus:ring-1 focus:ring-primary/50">
+                        class="w-full border border-muted/30 bg-background rounded-lg px-3 py-2 pr-10 font-normal text-primary focus:border-secondary/50 focus:ring-1 focus:ring-secondary/50">
                     
                     <button type="button" @click="show = !show" 
                         class="absolute inset-y-0 right-0 pr-3 flex items-center text-muted hover:text-primary transition-colors outline-none">
