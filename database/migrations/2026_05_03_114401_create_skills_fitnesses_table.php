@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('skills_fitnesses', function (Blueprint $table) {
             $table->id('skillsFitnessID');
             $table->foreignId('applicantID')->constrained('applicants', 'applicantID')->cascadeOnDelete();
+            $table->boolean('isPassed');
             $table->decimal('agilityTtestResult', 5, 2)->nullable();
             $table->decimal('standingLongJumpResult', 5, 2)->nullable();
             $table->decimal('hexagonAgilityResult', 5, 2)->nullable();

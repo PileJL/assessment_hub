@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('applicants', function (Blueprint $table) {
             $table->id('applicantID');
             $table->string('fullName');
+            $table->boolean('isPassed');
             $table->decimal('height', 5, 2)->comment('Height in meters');
             $table->decimal('weight', 5, 2)->comment('Weight in kilograms');
         });

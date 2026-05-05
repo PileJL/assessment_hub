@@ -79,7 +79,7 @@ new class extends Component
 
         <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
             <x-label-input label="3-Min Step Test (bpm)" propertyName="form.threeMinStepResult" type="text" placeholder="0" />
-            <x-label-input label="Plank (sec)" propertyName="form.plankTest" type="text" placeholder="0.0" />
+            <x-label-input label="Plank (sec)" propertyName="form.plankTestResult" type="text" placeholder="0.0" />
         </div>
     </div>
 

@@ -23,7 +23,8 @@ new class extends Component
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
         {{-- applicant option --}}
-        <div class="flex flex-col gap-3 items-center justify-center rounded-xl border-2 border-muted/30 bg-white p-8 w-full md:w-xs text-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:border-secondary cursor-pointer group">
+        <a href="/applicant" wire:navigate 
+            class="flex flex-col gap-3 items-center justify-center rounded-xl border-2 border-muted/30 bg-white p-8 w-full md:w-xs text-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:border-secondary cursor-pointer group">
             {{-- applicant icon --}}
             <div class="text-secondary bg-muted/10 rounded-xl w-fit px-3 py-2 group-hover:bg-secondary group-hover:text-white">
                 <x-icons.clipboard size="size-10"/>
@@ -36,7 +37,7 @@ new class extends Component
             <div class="text-muted font-normal text-sm">
                 Check your physical assessment scores and results
             </div>
-        </div>
+        </a>
 
         {{-- admin option --}}
         <a href="/login" wire:navigate 
