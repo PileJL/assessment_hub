@@ -48,7 +48,7 @@ class ApplicantForm extends Form
         $this->validate();
 
         // Pre-calculate results to determine the overall 'isPassed' status
-        $bmiPassed = $this->getBMIresult($this->weight, $this->height);
+        $bmiPassed = $this->isBMIPassed($this->weight, $this->height);
         $skillsPassed = $this->getSkillsFitnessResult();
         $healthPassed = $this->getHealthFitnessResult();
 

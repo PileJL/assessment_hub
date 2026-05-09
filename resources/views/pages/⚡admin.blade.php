@@ -10,6 +10,8 @@ new class extends Component
     public function save()
     {
         $this->form->save();
+        // Dispatch event to the browser
+        $this->dispatch('show-toast', message: 'Applicant record saved successfully!');
     }
 };
 ?>
@@ -83,7 +85,8 @@ new class extends Component
         </div>
     </div>
 
-    <button type="submit" class="w-full font-semibold text-white text-md rounded-lg bg-secondary py-2.5 hover:cursor-pointer">
-        Save Record
+    <button type="submit" class="w-full font-semibold text-white text-md rounded-lg bg-secondary py-2.5 hover:cursor-pointer flex gap-2 items-center justify-center">
+        <span><x-icons.save size="size-6"/></span>
+        <span>Save Record</span>
     </button>
 </form>

@@ -1,3 +1,3 @@
-<div>
-    <!-- The biggest battle is the war against ignorance. - Mustafa Kemal Atatürk -->
+<div class="bg-green-600 rounded-xl text-white font-semibold text-sm px-2 py-.5">
+    {{ $slot }}
 </div>
