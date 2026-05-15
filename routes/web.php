@@ -11,7 +11,8 @@ Route::middleware(['guest'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function() {
-    Route::livewire('/admin-dashboard', 'pages::admin')->name('admin-dashboard');
+    Route::livewire('/admin-dashboard', 'pages::admin.index')->name('admin-dashboard');
+    Route::livewire('/admin-dashboard/create', 'pages::admin.create')->name('admin-dashboard.create');
     
     Route::get('/logout', function() {
         Auth::logout();

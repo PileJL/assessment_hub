@@ -61,6 +61,7 @@ class ApplicantForm extends Form
                 'weight'      => $this->weight,
                 // Overall pass only if all three categories pass
                 'isPassed'    => ($bmiPassed && $skillsPassed && $healthPassed) ? 1 : 0,
+                'timestampCreatedAt' => now()
             ]);
 
             // 2. Create the Skills Fitness Record

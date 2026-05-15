@@ -9,11 +9,15 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
         @livewireStyles
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=inter:400,500,600&display=swap" rel="stylesheet" />
+        @fluxAppearance
     </head>
     <body class="bg-background antialiased max-w-7xl mx-auto p-6">
         {{ $slot }}
 
         <x-toast />
         @livewireScripts
+        @fluxScripts
     </body>
 </html>

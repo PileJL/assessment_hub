@@ -17,19 +17,11 @@ new class extends Component
 ?>
 
 <form wire:submit="save" class="space-y-6 max-w-3xl mx-auto mt-4">
-    {{-- Buttons --}}
-    <div class="flex justify-between items-center">
-        {{-- back --}}
-        <a href="/" wire:navigate class="flex gap-2 items-center text-primary font-medium rounded-lg hover:bg-green hover:text-white px-3 py-1 w-fit">
-            <x-icons.back size="size-3.5"/>
-            <span>Back</span>
-        </a>
-        {{-- logout button --}}
-        <a href="/logout" wire:navigate class="flex gap-1 items-center text-primary font-medium rounded-lg border border-muted/30 px-3 py-1 w-fit cursor-pointer shadow-sm">
-            <x-icons.logout size="size-5"/>
-            <span>Log out</span>
-        </a>
-    </div>
+    {{-- back --}}
+    <a href="{{ route('admin-dashboard') }}" wire:navigate class="flex gap-2 items-center text-primary font-medium rounded-lg hover:bg-green hover:text-white px-3 py-1 w-fit">
+        <x-icons.back size="size-3.5"/>
+        <span>Back</span>
+    </a>
 
     {{-- header --}}
     <div>

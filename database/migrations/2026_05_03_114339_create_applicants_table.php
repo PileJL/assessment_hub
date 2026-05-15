@@ -17,6 +17,7 @@ return new class extends Migration
             $table->boolean('isPassed');
             $table->decimal('height', 5, 2)->comment('Height in meters');
             $table->decimal('weight', 5, 2)->comment('Weight in kilograms');
+            $table->timestamp('timestampCreatedAt');
         });
     }
 

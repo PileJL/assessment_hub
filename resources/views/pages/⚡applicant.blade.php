@@ -3,11 +3,13 @@
 use Livewire\Component;
 use App\Models\Applicant;
 use App\Utilities;
+use Livewire\Attributes\Url;
 
 new class extends Component
 {
     use Utilities;
 
+    #[Url(as: 'id', except: '')]
     public string $searchID = '';
     public ?Applicant $applicant = null;
 
