@@ -45,20 +45,30 @@ new class extends Component
 ?>
 
 <div class="flex flex-col gap-3">
-    {{-- page header --}}
-    <x-page-header>Admin Dashboard</x-page-header>
-    {{-- Add and Log out buttons --}}
+    
     <div class="flex justify-between items-center">
-        {{-- add applicant button --}}
-        <a href="{{ route('admin-dashboard.create') }}" wire:navigate class="flex gap-1 items-center text-primary text-sm font-medium rounded-lg border border-muted/30 pl-3 pr-4 py-1 w-fit cursor-pointer shadow-sm">
-            <x-icons.add size="size-4"/>
-            <span>Applicant</span>
+        {{-- back button--}}
+        <a href="{{ route('home') }}" wire:navigate class="flex gap-2 items-center text-primary font-medium rounded-lg hover:bg-green hover:text-white px-3 py-1 w-fit">
+            <x-icons.back size="size-3.5"/>
+            <span>Back</span>
         </a>
         {{-- logout button --}}
         <a href="/logout" wire:navigate class="flex gap-1 items-center text-primary text-sm font-medium rounded-lg border border-muted/30 pl-3 pr-4 py-1 w-fit cursor-pointer shadow-sm">
-            <x-icons.logout size="size-4"/>
+            <x-icons.logout size="size-5"/>
             <span>Log out</span>
         </a>
+    </div>
+    
+    {{-- page header --}}
+    <div class="flex justify-between items-center text-background">
+        {{-- header text --}}
+        <x-page-header>Admin Dashboard</x-page-header>
+        {{-- add applicant button --}}
+        <a href="{{ route('admin-dashboard.create') }}" wire:navigate class="flex gap-1 items-center bg-secondary text-sm font-medium rounded-lg pl-3 pr-4 py-2 w-fit cursor-pointer shadow-sm">
+            <x-icons.add size="size-4"/>
+            <span>Applicant</span>
+        </a>
+
     </div>
 
     {{-- filters --}}

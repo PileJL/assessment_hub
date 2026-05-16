@@ -20,7 +20,7 @@
                         class="relative hover:bg-gray-200 transition-colors group">
                         {{-- applicant ID --}}
                         <x-table-data class="text-left" style="width: 20%;">
-                            <a href="{{ route('admin-dashboard.create', $applicant->applicantID) }}"
+                            <a href="{{ route('admin-dashboard.edit', $applicant->applicantID) }}"
                                 wire:navigate
                                 class="font-medium text-primary after:absolute after:inset-0 cursor-default">
                                     {{ $applicant->applicantID }}

@@ -12,36 +12,65 @@ class ApplicantForm extends Form
 {
     use Utilities;
 
+    public $applicant;
+
     #[Validate('required|integer|min:0|unique:applicants,applicantID')]
-    public ?int $applicantID;
+    public $applicantID;
     #[Validate('required|string|min:3|max:255')]
-    public ?string $fullName;
+    public $fullName;
     #[Validate('required|numeric|min:0.5|max:3.0')]
-    public ?float $height;
+    public $height;
     #[Validate('required|numeric|min:10|max:500')]
-    public ?float $weight;
+    public $weight;
 
     /** Skills Fitness Results */
     #[Validate('required|numeric|min:0')]
-    public ?float $agilityTtestResult;
+    public $agilityTtestResult;
     #[Validate('required|numeric|min:0')]
-    public ?float $standingLongJumpResult;
+    public $standingLongJumpResult;
     #[Validate('required|numeric|min:0')]
-    public ?float $hexagonAgilityResult;
+    public $hexagonAgilityResult;
     #[Validate('required|numeric|min:0')]
-    public ?float $fortyYardDashResult;
+    public $fortyYardDashResult;
     #[Validate('required|numeric|min:0')]
-    public ?float $storkBalanceStandResult;
+    public $storkBalanceStandResult;
 
     /** Health Fitness Results */
     #[Validate('required|integer|min:0')]
-    public ?int $pushUpsResult;
+    public $pushUpsResult;
     #[Validate('required|numeric|min:0')]
-    public ?float $sitAndReachResult;
+    public $sitAndReachResult;
     #[Validate('required|integer|min:0')]
-    public ?int $threeMinStepResult;
+    public $threeMinStepResult;
     #[Validate('required|numeric|min:0')]
-    public ?float $plankTestResult;
+    public $plankTestResult;
+
+    public function setApplicant(Applicant $applicant)
+    {
+        $this->applicant = $applicant->loadMissing(['skillsFitness', 'healthFitness']);
+
+        $this->applicantID = $this->applicant->applicantID;
+        $this->fullName = $this->applicant->fullName;
+        $this->height = $this->applicant->height;
+        $this->weight = $this->applicant->weight;
+
+        $skills = $this->applicant->skillsFitness;
+        if ($skills) {
+            $this->agilityTtestResult = $skills->agilityTtestResult;
+            $this->standingLongJumpResult = $skills->standingLongJumpResult;
+            $this->hexagonAgilityResult = $skills->hexagonAgilityResult;
+            $this->fortyYardDashResult = $skills->fortyYardDashResult;
+            $this->storkBalanceStandResult = $skills->storkBalanceStandResult;
+        }
+
+        $health = $this->applicant->healthFitness;
+        if ($health) {
+            $this->pushUpsResult = $health->pushUpsResult;
+            $this->sitAndReachResult = $health->sitAndReachResult;
+            $this->threeMinStepResult = $health->threeMinStepResult;
+            $this->plankTestResult = $health->plankTestResult;
+        }
+    }
 
     public function save()
     {
@@ -54,65 +83,53 @@ class ApplicantForm extends Form
 
         DB::transaction(function () use ($bmiPassed, $skillsPassed, $healthPassed) {
             // 1. Create the Applicant
-            $applicant = Applicant::create([
-                'applicantID' => $this->applicantID,
-                'fullName'    => $this->fullName,
-                'height'      => $this->height,
-                'weight'      => $this->weight,
-                // Overall pass only if all three categories pass
-                'isPassed'    => ($bmiPassed && $skillsPassed && $healthPassed) ? 1 : 0,
-                'timestampCreatedAt' => now()
-            ]);
+            $applicant = Applicant::create($this->only('applicantID', 'fullName', 'height', 'weight') 
+                + ['isPassed' => ($bmiPassed && $skillsPassed && $healthPassed) ? 1 : 0] + ['timestampCreatedAt' => now()]);
 
             // 2. Create the Skills Fitness Record
-            $applicant->skillsFitness()->create([
-                'isPassed'                => $skillsPassed,
-                'agilityTtestResult'       => $this->agilityTtestResult,
-                'standingLongJumpResult'   => $this->standingLongJumpResult,
-                'hexagonAgilityResult'     => $this->hexagonAgilityResult,
-                'fortyYardDashResult'      => $this->fortyYardDashResult,
-                'storkBalanceStandResult'  => $this->storkBalanceStandResult,
-            ]);
+            $applicant->skillsFitness()->create($this->only('agilityTtestResult', 'standingLongJumpResult', 'hexagonAgilityResult', 'fortyYardDashResult',
+                'storkBalanceStandResult') + ['isPassed' => $skillsPassed]);
 
             // 3. Create the Health Fitness Record
-            $applicant->healthFitness()->create([
-                'isPassed'           => $healthPassed,
-                'pushUpsResult'      => $this->pushUpsResult,
-                'sitAndReachResult'  => $this->sitAndReachResult,
-                'threeMinStepResult' => $this->threeMinStepResult,
-                'plankTestResult'    => $this->plankTestResult,
-            ]);
+            $applicant->healthFitness()->create($this->only('pushUpsResult', 'sitAndReachResult', 'threeMinStepResult', 'plankTestResult') + ['isPassed' => $healthPassed]);
         });
 
         $this->reset();
     }
 
-    private function getSkillsFitnessResult(): int
+    public function update()
     {
-        // Criteria for Passing (Aggregated "Average" Benchmarks):
-        $checks = [
-            $this->agilityTtestResult <= 11.5,      // Sub 11.5 seconds
-            $this->standingLongJumpResult >= 200,   // At least 200 cm
-            $this->hexagonAgilityResult <= 15.0,    // Sub 15 seconds
-            $this->fortyYardDashResult <= 5.8,      // Sub 5.8 seconds
-            $this->storkBalanceStandResult >= 15,   // Hold for 15+ seconds
-        ];
+        $this->validate([
+            'fullName' => 'required|string|min:3|max:255',
+            'height' => 'required|numeric|min:0.5|max:3.0',
+            'weight' => 'required|numeric|min:10|max:500',
+            'agilityTtestResult' => 'required|numeric|min:0',
+            'standingLongJumpResult' => 'required|numeric|min:0',
+            'hexagonAgilityResult' => 'required|numeric|min:0',
+            'fortyYardDashResult' => 'required|numeric|min:0',
+            'storkBalanceStandResult' => 'required|numeric|min:0',
+            'pushUpsResult' => 'required|integer|min:0',
+            'sitAndReachResult' => 'required|numeric|min:0',
+            'threeMinStepResult' => 'required|integer|min:0',
+            'plankTestResult' => 'required|numeric|min:0',
+        ]);
 
-        // Pass if they meet at least 4 out of 5 skills
-        return count(array_filter($checks)) >= 4 ? 1 : 0;
-    }
+        // Pre-calculate results to determine the overall 'isPassed' status
+        $bmiPassed = $this->isBMIPassed($this->weight, $this->height);
+        $skillsPassed = $this->getSkillsFitnessResult();
+        $healthPassed = $this->getHealthFitnessResult();
 
-    private function getHealthFitnessResult(): int
-    {
-        // Criteria for Passing:
-        $checks = [
-            $this->pushUpsResult >= 20,             // 20+ reps
-            $this->sitAndReachResult >= 25,         // 25+ cm
-            $this->threeMinStepResult <= 100,       // Recovery heart rate below 100 bpm
-            $this->plankTestResult >= 60,           // 60+ seconds
-        ];
+        DB::transaction(function () use ($bmiPassed, $skillsPassed, $healthPassed) {
+            // 1. Create the Applicant
+            $this->applicant->update($this->only('applicantID', 'fullName', 'height', 'weight') 
+                + ['isPassed' => ($bmiPassed && $skillsPassed && $healthPassed) ? 1 : 0] + ['timestampCreatedAt' => now()]);
 
-        // Pass if they meet at least 3 out of 4 health metrics
-        return count(array_filter($checks)) >= 3 ? 1 : 0;
+            // 2. Create the Skills Fitness Record
+            $this->applicant->skillsFitness()->update($this->only('agilityTtestResult', 'standingLongJumpResult', 'hexagonAgilityResult', 'fortyYardDashResult',
+                'storkBalanceStandResult') + ['isPassed' => $skillsPassed]);
+
+            // 3. Create the Health Fitness Record
+            $this->applicant->healthFitness()->update($this->only('pushUpsResult', 'sitAndReachResult', 'threeMinStepResult', 'plankTestResult') + ['isPassed' => $healthPassed]);
+        });
     }
 }

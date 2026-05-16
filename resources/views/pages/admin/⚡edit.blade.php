@@ -2,21 +2,27 @@
 
 use Livewire\Component;
 use App\Livewire\Forms\ApplicantForm;
+use App\Models\Applicant;
 
 new class extends Component
 {
     public ApplicantForm $form;
 
-    public function save()
+    public function mount(Applicant $applicant)
     {
-        $this->form->save();
+        $this->form->setApplicant($applicant->loadMissing(['skillsFitness', 'healthFitness']));
+    }
+
+    public function update()
+    {
+        $this->form->update();
         // Dispatch event to the browser
-        $this->dispatch('show-toast', message: 'Applicant record saved successfully!');
+        $this->dispatch('show-toast', message: 'Applicant record updated successfully!');
     }
 };
 ?>
 
-<form wire:submit="save" class="space-y-6 max-w-3xl mx-auto mt-4">
+<form wire:submit="update" class="space-y-6 max-w-3xl mx-auto mt-4">
     {{-- back --}}
     <a href="{{ route('admin-dashboard') }}" wire:navigate class="flex gap-2 items-center text-primary font-medium rounded-lg hover:bg-green hover:text-white px-3 py-1 w-fit">
         <x-icons.back size="size-3.5"/>
@@ -34,7 +40,7 @@ new class extends Component
         <div class="text-primary font-bold text-md w-full mb-2">Applicant & BMI</div>
         
         <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
-            <x-label-input label="Applicant ID" propertyName="form.applicantID" type="text" placeholder="12345" />
+            <x-label-input label="Applicant ID" propertyName="form.applicantID" type="text" placeholder="12345" readonly />
             <x-label-input label="Full Name" propertyName="form.fullName" type="text" placeholder="Cruz Dela Juan" />
         </div>
 
@@ -67,18 +73,18 @@ new class extends Component
         <div class="text-primary font-bold text-md w-full mb-2">Health-Related Fitness</div>
         
         <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
-            <x-label-input label="Push-ups (reps)" propertyName="form.pushUpsResult" type="text" placeholder="0" />
+            <x-label-input label="Push-ups (reps)" propertyName="form.pushUpsResult" type="number" placeholder="0" />
             <x-label-input label="Sit and Reach (cm)" propertyName="form.sitAndReachResult" type="text" placeholder="0.0" />
         </div>
 
         <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
-            <x-label-input label="3-Min Step Test (bpm)" propertyName="form.threeMinStepResult" type="text" placeholder="0" />
+            <x-label-input label="3-Min Step Test (bpm)" propertyName="form.threeMinStepResult" type="number" placeholder="0" />
             <x-label-input label="Plank (sec)" propertyName="form.plankTestResult" type="text" placeholder="0.0" />
         </div>
     </div>
 
     <button type="submit" class="w-full font-semibold text-white text-md rounded-lg bg-secondary py-2.5 hover:cursor-pointer flex gap-2 items-center justify-center">
         <span><x-icons.save size="size-6"/></span>
-        <span>Save Record</span>
+        <span>Update Record</span>
     </button>
 </form>
