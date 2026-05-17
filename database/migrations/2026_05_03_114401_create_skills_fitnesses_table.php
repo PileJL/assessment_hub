@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id('skillsFitnessID');
             $table->foreignId('applicantID')->constrained('applicants', 'applicantID')->cascadeOnDelete();
             $table->boolean('isPassed');
-            $table->decimal('agilityTtestResult', 5, 2)->nullable();
+            $table->decimal('stickDropTestResult', 5, 2)->nullable();
             $table->decimal('standingLongJumpResult', 5, 2)->nullable();
             $table->decimal('hexagonAgilityResult', 5, 2)->nullable();
-            $table->decimal('fortyYardDashResult', 5, 2)->nullable();
+            $table->decimal('fortyMeterSprinthResult', 5, 2)->nullable();
             $table->decimal('storkBalanceStandResult', 5, 2)->nullable();
+            $table->decimal('jugglingResult', 5, 2)->nullable();
         });
     }
 

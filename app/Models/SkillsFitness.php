@@ -21,11 +21,13 @@ class SkillsFitness extends Model
     use HasFactory;
 
     protected $casts = [
-        'agilityTtestResult' => 'float',
+        'isPassed' => 'boolean',
+        'stickDropTestResult' => 'float',
         'standingLongJumpResult' => 'float',
         'hexagonAgilityResult' => 'float',
-        'fortyYardDashResult' => 'float',
+        'fortyMeterSprinthResult' => 'float',
         'storkBalanceStandResult' => 'float',
+        'jugglingResult' => 'float',
     ];
 
     public function applicant()

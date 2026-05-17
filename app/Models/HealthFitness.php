@@ -21,6 +21,7 @@ class HealthFitness extends Model
     use HasFactory;
 
     protected $casts = [
+        'isPassed' => 'boolean',
         'pushUpsResult' => 'integer',
         'threeMinStepResult' => 'integer',
         'sitAndReachResult' => 'float',

@@ -25,25 +25,25 @@ trait Utilities
         };
     }
 
-    public function isBMIPassed($weight, $height): bool
+    public function isBMIPassed($weight, $height): int
     {
         $bmi = $this->getBMIValue($weight, $height);
-        return ($bmi >= 18.5 && $bmi <= 24.9);
+        return ($bmi >= 18.5 && $bmi <= 24.9) ? 20 : 0;
     }
 
     public function getSkillsFitnessResult(): int
     {
-        // Criteria for Passing (Aggregated "Average" Benchmarks):
         $checks = [
-            $this->agilityTtestResult <= 11.5,      // Sub 11.5 seconds
-            $this->standingLongJumpResult >= 200,   // At least 200 cm
-            $this->hexagonAgilityResult <= 15.0,    // Sub 15 seconds
-            $this->fortyYardDashResult <= 5.8,      // Sub 5.8 seconds
-            $this->storkBalanceStandResult >= 15,   // Hold for 15+ seconds
+            $this->fortyMeterSprinthResult <= 5.8,   // 5.8s or less
+            $this->standingLongJumpResult >= 200,    // 200cm or more
+            $this->hexagonAgilityResult <= 15.0,     // 15.0s or less
+            $this->stickDropTestResult <= 11.5,      // 11.5cm or less
+            $this->jugglingResult >= 30,             // 30s or more
+            $this->storkBalanceStandResult >= 15,    // 15s or more
         ];
 
-        // Pass if they meet at least 4 out of 5 skills
-        return count(array_filter($checks)) >= 4 ? 1 : 0;
+        // Pass if meet at least 4 out of 6
+        return count(array_filter($checks)) >= 4 ? 40 : 0;
     }
 
     public function getHealthFitnessResult(): int
@@ -57,6 +57,6 @@ trait Utilities
         ];
 
         // Pass if they meet at least 3 out of 4 health metrics
-        return count(array_filter($checks)) >= 3 ? 1 : 0;
+        return count(array_filter($checks)) >= 3 ? 40 : 0;
     }
 }

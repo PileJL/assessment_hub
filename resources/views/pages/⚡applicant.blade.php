@@ -182,7 +182,7 @@ new class extends Component
                 </div>
                 {{-- result --}}
                 <div>
-                    @if ($applicant->skillsFitness->isPassed)
+                    @if ($applicant->healthFitness->isPassed)
                         <x-green-tag>Passed</x-green-tag>
                     @else
                         <x-red-tag>Failed</x-red-tag>
