@@ -2,11 +2,8 @@
 <html>
 <head>
     <style>
-        body { font-family: sans-serif; color: #0F1729; line-height: 1.4; }
+        body { font-family: DejaVu Sans, sans-serif; color: #0F1729; line-height: 1.4; }
         .header { text-align: center; border-bottom: 2px solid #0f2156; padding-bottom: 10px; }
-        .status { padding: 10px; margin: 20px 0; border-radius: 8px; text-align: center; font-weight: bold; font-size: 18px; }
-        .passed { background: #dcfce7; color: #166534; }
-        .failed { background: #fee2e2; color: #991b1b; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th { text-align: left; color: #65758B; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid #e2e8f0; padding: 8px; }
         td { padding: 8px; border-bottom: 1px solid #f1f5f9; font-size: 13px; }
@@ -19,10 +16,6 @@
     <div class="header">
         <h1 style="margin-bottom: 5px;">BPEd Assessment Result</h1>
         <p style="margin: 0; font-size: 12px; color: #64748b;">Generated on {{ now()->format('M d, Y h:i A') }}</p>
-    </div>
-
-    <div class="status {{ $applicant->isPassed ? 'passed' : 'failed' }}">
-        {{ $applicant->isPassed ? 'OVERALL STATUS: PASSED' : 'OVERALL STATUS: DID NOT PASS' }}
     </div>
 
     <table style="margin-bottom: 20px;">
@@ -46,11 +39,12 @@
     <table>
         <thead><tr><th>Test</th><th style="text-align: right">Score</th></tr></thead>
         <tbody>
-            <tr><td>Agility T-Test</td><td class="score">{{ $applicant->skillsFitness->agilityTtestResult }}s</td></tr>
-            <tr><td>Standing Long Jump</td><td class="score">{{ $applicant->skillsFitness->standingLongJumpResult }}cm</td></tr>
-            <tr><td>Hexagon Agility Test</td><td class="score">{{ $applicant->skillsFitness->hexagonAgilityResult }}s</td></tr>
-            <tr><td>40-Yard Dash</td><td class="score">{{ $applicant->skillsFitness->fortyYardDashResult }}s</td></tr>
-            <tr><td>Stork Balance Stand</td><td class="score">{{ $applicant->skillsFitness->storkBalanceStandResult }}s</td></tr>
+            @php $u = new class { use \App\Utilities; }; @endphp
+            <tr><td>Stick Drop Test</td><td class="score">{{ $u->getScoreEquivalent($u->getStickDropTestResult($applicant->skillsFitness->stickDropTestResult)) }}</td></tr>
+            <tr><td>Standing Long Jump</td><td class="score">{{ $u->getScoreEquivalent($u->getStandingLongJumpResult($applicant->skillsFitness->standingLongJumpResult)) }}</td></tr>
+            <tr><td>Hexagon Agility Test</td><td class="score">{{ $u->getScoreEquivalent($u->getHexagonAgilityResult($applicant->skillsFitness->hexagonAgilityResult)) }}</td></tr>
+            <tr><td>40-Meter Sprint</td><td class="score">{{ $u->getScoreEquivalent($u->get40meterSprintResult($applicant->skillsFitness->fortyMeterSprinthResult)) }}</td></tr>
+            <tr><td>Stork Balance Stand</td><td class="score">{{ $u->getScoreEquivalent($u->getStorkBalanceResult($applicant->skillsFitness->storkBalanceStandResult)) }}</td></tr>
         </tbody>
     </table>
 
@@ -59,10 +53,11 @@
     <table>
         <thead><tr><th>Test</th><th style="text-align: right">Score</th></tr></thead>
         <tbody>
-            <tr><td>Push-ups</td><td class="score">{{ $applicant->healthFitness->pushUpsResult }} reps</td></tr>
-            <tr><td>Sit and Reach</td><td class="score">{{ $applicant->healthFitness->sitAndReachResult }}cm</td></tr>
+            @php $u = new class { use \App\Utilities; }; @endphp
+            <tr><td>Push-ups</td><td class="score">{{ $u->getScoreEquivalent($u->getPushUpResult($applicant->healthFitness->pushUpsResult)) }}</td></tr>
+            <tr><td>Sit and Reach</td><td class="score">{{ $u->getScoreEquivalent($u->getSitAndReachResult($applicant->healthFitness->sitAndReachResult)) }}</td></tr>
             <tr><td>3-Min Step Test</td><td class="score">{{ $applicant->healthFitness->threeMinStepResult }} bpm</td></tr>
-            <tr><td>Plank</td><td class="score">{{ $applicant->healthFitness->plankTestResult }}s</td></tr>
+            <tr><td>Plank</td><td class="score">{{ $u->getScoreEquivalent($u->getPlankResult($applicant->healthFitness->plankTestResult)) }}</td></tr>
         </tbody>
     </table>
 </body>

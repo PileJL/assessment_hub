@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('health_fitnesses', function (Blueprint $table) {
             $table->id('healthFitnessID');
             $table->foreignId('applicantID')->constrained('applicants', 'applicantID')->cascadeOnDelete();
-            $table->boolean('isPassed');
             $table->integer('pushUpsResult')->nullable(); // Count
             $table->decimal('sitAndReachResult', 5, 2)->nullable(); // Centimeters
             $table->integer('threeMinStepResult')->nullable(); // Heart rate / Beats per minute

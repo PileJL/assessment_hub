@@ -96,14 +96,6 @@ new class extends Component
                     <span class="text-green-600"><x-icons.bmi/></span>
                     <span class="text-primary text-md font-semibold">BMI Assessment</span>
                 </div>
-                {{-- result --}}
-                <div>
-                    @if ($this->isBMIPassed($applicant->weight, $applicant->height))
-                        <x-green-tag>Passed</x-green-tag>
-                    @else
-                        <x-red-tag>Failed</x-red-tag>
-                    @endif
-                </div>
             </div>
             {{-- test details --}}
             <div class="grid grid-cols-2 gap-x-6 gap-y-3">
@@ -139,14 +131,6 @@ new class extends Component
                     <span class="text-green-600"><x-icons.skills/></span>
                     <span class="text-primary text-md font-semibold">Skills-Related Fitness</span>
                 </div>
-                {{-- result --}}
-                <div>
-                    @if ($applicant->skillsFitness->isPassed)
-                        <x-green-tag>Passed</x-green-tag>
-                    @else
-                        <x-red-tag>Failed</x-red-tag>
-                    @endif
-                </div>
             </div>
 
             {{-- Data Table --}}
@@ -158,11 +142,11 @@ new class extends Component
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-muted/10">
-                    <x-table-row label="Agility T-Test (sec)" :value="$applicant->skillsFitness->agilityTtestResult"/>
-                    <x-table-row label="Standing Long Jump (cm)" :value="$applicant->skillsFitness->standingLongJumpResult"/>
-                    <x-table-row label="Hexagon Agility Test (sec)" :value="$applicant->skillsFitness->hexagonAgilityResult"/>
-                    <x-table-row label="40-Yard Dash (sec)" :value="$applicant->skillsFitness->fortyYardDashResult"/>
-                    <x-table-row label="Stork Balance Stand (sec)" :value="$applicant->skillsFitness->storkBalanceStandResult"/>
+                    <x-table-row label="Stick Drop Test (cm)" :value="$this->getStickDropTestResult($applicant->skillsFitness->stickDropTestResult)"/>
+                    <x-table-row label="Standing Long Jump (cm)" :value="$this->getStandingLongJumpResult($applicant->skillsFitness->standingLongJumpResult)"/>
+                    <x-table-row label="Hexagon Agility Test (sec)" :value="$this->getHexagonAgilityResult($applicant->skillsFitness->hexagonAgilityResult)"/>
+                    <x-table-row label="40-Meter Sprint (sec)" :value="$this->get40meterSprintResult($applicant->skillsFitness->fortyMeterSprinthResult)"/>
+                    <x-table-row label="Stork Balance Stand (sec)" :value="$this->getStorkBalanceResult($applicant->skillsFitness->storkBalanceStandResult)"/>
                 </tbody>
             </table>
         </div>
@@ -176,14 +160,6 @@ new class extends Component
                     <span class="text-green-600"><x-icons.health/></span>
                     <span class="text-primary text-md font-semibold">Health-Related Fitness</span>
                 </div>
-                {{-- result --}}
-                <div>
-                    @if ($applicant->healthFitness->isPassed)
-                        <x-green-tag>Passed</x-green-tag>
-                    @else
-                        <x-red-tag>Failed</x-red-tag>
-                    @endif
-                </div>
             </div>
 
             {{-- Data Table --}}
@@ -195,10 +171,10 @@ new class extends Component
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-muted/10">
-                    <x-table-row label="Push-ups (reps)" :value="$applicant->healthFitness->pushUpsResult"/>
-                    <x-table-row label="Sit and Reach (cm)" :value="$applicant->healthFitness->sitAndReachResult"/>
+                    <x-table-row label="Push-ups (reps)" :value="$this->getPushUpResult($applicant->healthFitness->pushUpsResult)"/>
+                    <x-table-row label="Sit and Reach (cm)" :value="$this->getSitAndReachResult($applicant->healthFitness->sitAndReachResult)"/>
                     <x-table-row label="3-Min Step Test (bpm)" :value="$applicant->healthFitness->threeMinStepResult"/>
-                    <x-table-row label="Plank (sec)" :value="$applicant->healthFitness->plankTestResult"/>
+                    <x-table-row label="Plank (sec)" :value="$this->getPlankResult($applicant->healthFitness->plankTestResult)"/>
                 </tbody>
             </table>
         </div>
@@ -206,8 +182,8 @@ new class extends Component
         {{-- export button --}}
         <button wire:click="export" wire:loading.attr="disabled" class="w-full font-semibold text-white text-md rounded-lg bg-secondary py-2.5 hover:cursor-pointer flex gap-2 items-center justify-center">
             <span wire:loading.remove><x-icons.export size="size-6"/></span>
-            <span wire:loading class="animate-spin">...</span>
-            <span>Export Result</span>
+            <span wire:loading.remove>Export Result</span>
+            <span wire:loading>Exporting...</span>
         </button>
     @endif
 

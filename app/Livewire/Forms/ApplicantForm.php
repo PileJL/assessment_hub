@@ -79,22 +79,16 @@ class ApplicantForm extends Form
     {
         $this->validate();
 
-        // Pre-calculate results to determine the overall 'isPassed' status
-        $bmiPassed = $this->isBMIPassed($this->weight, $this->height);
-        $skillsPassed = $this->getSkillsFitnessResult();
-        $healthPassed = $this->getHealthFitnessResult();
-
-        DB::transaction(function () use ($bmiPassed, $skillsPassed, $healthPassed) {
+        DB::transaction(function () {
             // 1. Create the Applicant
-            $applicant = Applicant::create($this->only('applicantID', 'fullName', 'height', 'weight') 
-                + ['isPassed' => ($bmiPassed && $skillsPassed && $healthPassed) ? 1 : 0] + ['timestampCreatedAt' => now()]);
+            $applicant = Applicant::create($this->only('applicantID', 'fullName', 'height', 'weight') + ['timestampCreatedAt' => now()]);
 
             // 2. Create the Skills Fitness Record
             $applicant->skillsFitness()->create($this->only('stickDropTestResult', 'standingLongJumpResult', 'hexagonAgilityResult', 'fortyMeterSprinthResult',
-                'storkBalanceStandResult', 'jugglingResult') + ['isPassed' => $skillsPassed]);
+                'storkBalanceStandResult', 'jugglingResult'));
 
             // 3. Create the Health Fitness Record
-            $applicant->healthFitness()->create($this->only('pushUpsResult', 'sitAndReachResult', 'threeMinStepResult', 'plankTestResult') + ['isPassed' => $healthPassed]);
+            $applicant->healthFitness()->create($this->only('pushUpsResult', 'sitAndReachResult', 'threeMinStepResult', 'plankTestResult'));
         });
 
         $this->reset();
@@ -117,23 +111,16 @@ class ApplicantForm extends Form
             'threeMinStepResult' => 'required|integer|min:0',
             'plankTestResult' => 'required|numeric|min:0',
         ]);
-
-        // Pre-calculate results to determine the overall 'isPassed' status
-        $bmiPassed = $this->isBMIPassed($this->weight, $this->height);
-        $skillsPassed = $this->getSkillsFitnessResult();
-        $healthPassed = $this->getHealthFitnessResult();
-
-        DB::transaction(function () use ($bmiPassed, $skillsPassed, $healthPassed) {
+        DB::transaction(function () {
             // 1. Create the Applicant
-            $this->applicant->update($this->only('applicantID', 'fullName', 'height', 'weight') 
-                + ['isPassed' => ($bmiPassed + $skillsPassed + $healthPassed) >= 80] + ['timestampCreatedAt' => now()]);
+            $this->applicant->update($this->only('applicantID', 'fullName', 'height', 'weight') + ['timestampCreatedAt' => now()]);
 
             // 2. Create the Skills Fitness Record
             $this->applicant->skillsFitness()->update($this->only('stickDropTestResult', 'standingLongJumpResult', 'hexagonAgilityResult', 'fortyMeterSprinthResult',
-                'storkBalanceStandResult', 'jugglingResult') + ['isPassed' => $skillsPassed === 40]);
+                'storkBalanceStandResult', 'jugglingResult'));
 
             // 3. Create the Health Fitness Record
-            $this->applicant->healthFitness()->update($this->only('pushUpsResult', 'sitAndReachResult', 'threeMinStepResult', 'plankTestResult') + ['isPassed' => $healthPassed === 40]);
+            $this->applicant->healthFitness()->update($this->only('pushUpsResult', 'sitAndReachResult', 'threeMinStepResult', 'plankTestResult'));
         });
     }
 }

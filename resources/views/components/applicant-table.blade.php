@@ -8,8 +8,7 @@
                 <tr>
                     <x-table-head class="whitespace-nowrap" style="width: 20%;">Applicant ID</x-table-head>
                     <x-table-head class="whitespace-nowrap hidden sm:table-cell" style="width: 20%;">Datetime ( GMT+8 )</x-table-head>
-                    <x-table-head class="whitespace-nowrap" style="width: 40%;">Name</x-table-head>
-                    <x-table-head class="w-25 whitespace-nowrap hidden sm:table-cell" style="width: 20%;">Result</x-table-head>
+                    <x-table-head class="whitespace-nowrap" style="width: 60%;">Name</x-table-head>
                 </tr>
             </thead>
 
@@ -31,12 +30,8 @@
                             {{ $applicant->timestampCreatedAt->format('M d, Y | h:i:s A') }}
                         </x-table-data>
                         {{-- applicant name --}}
-                        <x-table-data class="font-normal text-primary max-w-80 truncate whitespace-nowrap text-left" style="width: 40%;" title="{{ $applicant->fullName }}">
+                        <x-table-data class="font-normal text-primary max-w-80 truncate whitespace-nowrap text-left" style="width: 60%;" title="{{ $applicant->fullName }}">
                             {{ $applicant->fullName }}
-                        </x-table-data>
-                        {{-- Result --}}
-                        <x-table-data class="font-normal text-xs whitespace-nowrap hidden sm:table-cell text-left" style="width: 20%;">
-                            <x-result-col :isPassed="$applicant->isPassed" />
                         </x-table-data>
                     </tr>
                 @endforeach
