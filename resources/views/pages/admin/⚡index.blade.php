@@ -54,9 +54,10 @@ new class extends Component
             <span x-show="loading"><x-icons.loading  size="size-5" /></span>
         </a>
         {{-- logout button --}}
-        <a href="/logout" wire:navigate class="flex gap-1 items-center text-primary text-sm font-medium rounded-lg border border-muted/30 pl-3 pr-4 py-1 w-fit cursor-pointer shadow-sm">
+        <a x-data="{ loading: false }" @click="loading = true" href="/logout" wire:navigate class="flex gap-1 items-center text-primary text-sm font-medium rounded-lg border border-muted/30 pl-3 pr-4 py-1 w-fit cursor-pointer shadow-sm">
             <x-icons.logout size="size-5"/>
-            <span>Log out</span>
+            <span x-show="!loading">Log out</span>
+            <span x-show="loading"><x-icons.loading  size="size-5" /></span>
         </a>
     </div>
     

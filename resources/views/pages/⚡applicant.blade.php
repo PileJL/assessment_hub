@@ -76,12 +76,6 @@ new class extends Component
 
     {{-- applicant result --}}
     @if ($applicant)
-        {{-- failed card --}}
-        @if ($applicant->isPassed)
-            <x-green-card headerMessage="Congratualations, You Passed!" subheaderMessage="Please see your results below"/>
-        @else
-            <x-red-card headerMessage="Unfortunately, You Did Not Pass" subheaderMessage="Please see your results below"/>
-        @endif
         {{-- applicant name --}}
         <div class="bg-muted/10 rounded-lg flex justify-between items-center p-3">
             <div class="flex gap-2 items-center">
