@@ -48,9 +48,10 @@ new class extends Component
     
     <div class="flex justify-between items-center">
         {{-- back button--}}
-        <a href="{{ route('home') }}" wire:navigate class="flex gap-2 items-center text-primary font-medium rounded-lg hover:bg-green hover:text-white px-3 py-1 w-fit">
+        <a x-data="{ loading: false }" @click="loading = true" href="{{ route('home') }}" wire:navigate class="flex gap-3 items-center text-primary font-medium rounded-lg hover:bg-green hover:text-white px-3 py-1 w-fit">
             <x-icons.back size="size-3.5"/>
-            <span>Back</span>
+            <span x-show="!loading">Back</span>
+            <span x-show="loading"><x-icons.loading  size="size-5" /></span>
         </a>
         {{-- logout button --}}
         <a href="/logout" wire:navigate class="flex gap-1 items-center text-primary text-sm font-medium rounded-lg border border-muted/30 pl-3 pr-4 py-1 w-fit cursor-pointer shadow-sm">
@@ -64,9 +65,10 @@ new class extends Component
         {{-- header text --}}
         <x-page-header>Admin Dashboard</x-page-header>
         {{-- add applicant button --}}
-        <a href="{{ route('admin-dashboard.create') }}" wire:navigate class="flex gap-1 items-center bg-secondary text-sm font-medium rounded-lg pl-3 pr-4 py-2 w-fit cursor-pointer shadow-sm">
+        <a x-data="{ loading: false }" @click="loading = true" href="{{ route('admin-dashboard.create') }}" wire:navigate class="flex gap-2 items-center bg-secondary text-sm font-medium rounded-lg pl-3 pr-4 py-2 w-fit cursor-pointer shadow-sm">
             <x-icons.add size="size-4"/>
-            <span>Applicant</span>
+            <span x-show="!loading">Applicant</span>
+            <span x-show="loading"><x-icons.loading  size="size-5" /></span>
         </a>
 
     </div>

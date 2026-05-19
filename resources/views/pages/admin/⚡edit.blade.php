@@ -24,9 +24,10 @@ new class extends Component
 
 <form wire:submit="update" class="space-y-6 max-w-3xl mx-auto mt-4">
     {{-- back --}}
-    <a href="{{ route('admin-dashboard') }}" wire:navigate class="flex gap-2 items-center text-primary font-medium rounded-lg hover:bg-green hover:text-white px-3 py-1 w-fit">
+    <a x-data="{ loading: false }" @click="loading = true" href="{{ route('admin-dashboard') }}" wire:navigate class="flex gap-3 items-center text-primary font-medium rounded-lg hover:bg-green hover:text-white px-3 py-1 w-fit">
         <x-icons.back size="size-3.5"/>
-        <span>Back</span>
+        <span x-show="!loading">Back</span>
+        <span x-show="loading"><x-icons.loading  size="size-5" /></span>
     </a>
 
     {{-- header --}}
@@ -98,8 +99,9 @@ new class extends Component
         </div>
     </div>
 
-    <button type="submit" class="w-full font-semibold text-white text-md rounded-lg bg-secondary py-2.5 hover:cursor-pointer flex gap-2 items-center justify-center">
-        <span><x-icons.save size="size-6"/></span>
-        <span>Update Record</span>
+    <button type="submit" wire:loading.attr="disabled" class="w-full font-semibold text-white text-md rounded-lg bg-secondary py-2.5 hover:cursor-pointer flex gap-2 items-center justify-center">
+        <span wire:loading.remove><x-icons.save size="size-6"/></span>
+        <span wire:loading.remove>Update Record</span>
+        <span wire:loading>Updating Record...</span>
     </button>
 </form>

@@ -31,7 +31,7 @@
                             {{ $applicant->timestampCreatedAt->format('M d, Y | h:i:s A') }}
                         </x-table-data>
                         {{-- applicant name --}}
-                        <x-table-data class="font-normal max-w-80 truncate whitespace-nowrap text-left" style="width: 40%;" title="{{ $applicant->fullName }}">
+                        <x-table-data class="font-normal text-primary max-w-80 truncate whitespace-nowrap text-left" style="width: 40%;" title="{{ $applicant->fullName }}">
                             {{ $applicant->fullName }}
                         </x-table-data>
                         {{-- Result --}}

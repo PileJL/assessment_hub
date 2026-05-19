@@ -30,9 +30,10 @@ new class extends Component
 <div class="flex flex-col min-h-screen justify-center items-center pb-20">
     <div class="space-y-4 min-w-full sm:min-w-fit">
         {{-- back button --}}
-        <a wire:navigate href="/" class="flex gap-2 items-center text-primary font-medium rounded-lg hover:bg-green hover:text-white px-3 py-1 w-fit">
+        <a x-data="{ loading: false }" @click="loading = true" href="/" wire:navigate class="flex gap-3 items-center text-primary font-medium rounded-lg hover:bg-green hover:text-white px-3 py-1 w-fit">
             <x-icons.back size="size-3.5"/>
-            <span>Back</span>
+            <span x-show="!loading">Back</span>
+            <span x-show="loading"><x-icons.loading  size="size-5" /></span>
         </a>
         {{-- form container --}}
         <form wire:submit="authenticate">
@@ -70,8 +71,9 @@ new class extends Component
                     </div>
                 @endif
                 {{-- signin button --}}
-                <button type="submit" class="w-full mt-3 font-semibold text-white text-md rounded-lg bg-secondary py-2.5 tracking-wide hover:cursor-pointer">
-                    Sign In
+                <button type="submit" wire:loading.attr="disabled" class="w-full mt-3 font-semibold text-white text-md rounded-lg bg-secondary py-2.5 tracking-wide hover:cursor-pointer">
+                    <span wire:loading.remove>Sign In</span>
+                    <span wire:loading>Signing in...</span>
                 </button>
             </div>
         </form>

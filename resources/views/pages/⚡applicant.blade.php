@@ -48,9 +48,10 @@ new class extends Component
 
 <div class="max-w-3xl mx-auto mt-4 space-y-4">
     {{-- back button --}}
-    <a href="/" wire:navigate class="flex gap-2 items-center text-primary font-medium rounded-lg hover:bg-green hover:text-white px-3 py-1 w-fit">
+    <a x-data="{ loading: false }" @click="loading = true" href="/" wire:navigate class="flex gap-3 items-center text-primary font-medium rounded-lg hover:bg-green hover:text-white px-3 py-1 w-fit">
         <x-icons.back size="size-3.5"/>
-        <span>Back</span>
+        <span x-show="!loading">Back</span>
+        <span x-show="loading"><x-icons.loading  size="size-5" /></span>
     </a>
     {{-- header --}}
     <div>
@@ -63,8 +64,9 @@ new class extends Component
             class="w-full border border-muted/30 bg-background rounded-lg px-3 py-2 font-normal text-primary focus:border-secondary/50 focus:ring-1 focus:ring-secondary/50">
         
         <button type="submit" class="flex gap-1 items-center justify-between bg-secondary rounded-lg shadow-sm text-background font-medium px-3 py-1 hover:opacity-90">
-            <x-icons.search/>
-            <span>Search</span>
+            <span wire:loading.remove><x-icons.search /></span> 
+            <span wire:loading.remove>Search</span>
+            <span wire:loading>Searching...</span>
         </button>
     </form>
     {{-- applicant not found card --}}
@@ -84,7 +86,7 @@ new class extends Component
         <div class="bg-muted/10 rounded-lg flex justify-between items-center p-3">
             <div class="flex gap-2 items-center">
                 <span class="text-sm text-muted">Applicant:</span>
-                <span class="text-md font-primary font-medium">{{ $applicant->fullName }}</span>
+                <span class="text-md text-primary font-primary font-medium">{{ $applicant->fullName }}</span>
             </div>
             <div class="text-muted text-sm">
                 ID: {{ $applicant->applicantID }}
