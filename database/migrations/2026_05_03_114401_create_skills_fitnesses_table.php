@@ -18,7 +18,8 @@ return new class extends Migration
             $table->decimal('standingLongJumpResult', 5, 2)->nullable();
             $table->decimal('hexagonAgilityResult', 5, 2)->nullable();
             $table->decimal('fortyMeterSprinthResult', 5, 2)->nullable();
-            $table->decimal('storkBalanceStandResult', 5, 2)->nullable();
+            $table->decimal('leftStorkBalanceStandResult', 5, 2)->nullable();
+            $table->decimal('rightStorkBalanceStandResult', 5, 2)->nullable();
             $table->decimal('jugglingResult', 5, 2)->nullable();
         });
     }

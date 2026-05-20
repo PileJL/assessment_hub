@@ -23,7 +23,8 @@ class HealthFitness extends Model
     protected $casts = [
         'isPassed' => 'boolean',
         'pushUpsResult' => 'integer',
-        'threeMinStepResult' => 'integer',
+        'threeMinStepBeforeResult' => 'integer',
+        'threeMinStepAfterResult' => 'integer',
         'sitAndReachResult' => 'float',
         'plankTestResult' => 'float',
     ];

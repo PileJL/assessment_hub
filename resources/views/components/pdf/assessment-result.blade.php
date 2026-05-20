@@ -44,7 +44,7 @@
             <tr><td>Standing Long Jump</td><td class="score">{{ $u->getScoreEquivalent($u->getStandingLongJumpResult($applicant->skillsFitness->standingLongJumpResult)) }}</td></tr>
             <tr><td>Hexagon Agility Test</td><td class="score">{{ $u->getScoreEquivalent($u->getHexagonAgilityResult($applicant->skillsFitness->hexagonAgilityResult)) }}</td></tr>
             <tr><td>40-Meter Sprint</td><td class="score">{{ $u->getScoreEquivalent($u->get40meterSprintResult($applicant->skillsFitness->fortyMeterSprinthResult)) }}</td></tr>
-            <tr><td>Stork Balance Stand</td><td class="score">{{ $u->getScoreEquivalent($u->getStorkBalanceResult($applicant->skillsFitness->storkBalanceStandResult)) }}</td></tr>
+            <tr><td>Stork Balance Stand</td><td class="score">{{ $u->getScoreEquivalent($u->getStorkBalanceResult($applicant->skillsFitness->leftStorkBalanceStandResult, $applicant->skillsFitness->rightStorkBalanceStandResult)) }}</td></tr>
         </tbody>
     </table>
 
@@ -56,9 +56,16 @@
             @php $u = new class { use \App\Utilities; }; @endphp
             <tr><td>Push-ups</td><td class="score">{{ $u->getScoreEquivalent($u->getPushUpResult($applicant->healthFitness->pushUpsResult)) }}</td></tr>
             <tr><td>Sit and Reach</td><td class="score">{{ $u->getScoreEquivalent($u->getSitAndReachResult($applicant->healthFitness->sitAndReachResult)) }}</td></tr>
-            <tr><td>3-Min Step Test</td><td class="score">{{ $applicant->healthFitness->threeMinStepResult }} bpm</td></tr>
+            <tr><td>3-Min Step Test</td><td class="score">{{ $applicant->healthFitness->threeMinStepBeforeResult }} - {{ $applicant->healthFitness->threeMinStepAfterResult }} bpm</td></tr>
             <tr><td>Plank</td><td class="score">{{ $u->getScoreEquivalent($u->getPlankResult($applicant->healthFitness->plankTestResult)) }}</td></tr>
         </tbody>
     </table>
+
+    @if ($applicant->remarks)
+    <div class="section-title">Remarks</div>
+    <table>
+        <tr><td style="white-space: pre-line;">{{ $applicant->remarks }}</td></tr>
+    </table>
+    @endif
 </body>
 </html>

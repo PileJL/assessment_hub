@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('applicantID')->constrained('applicants', 'applicantID')->cascadeOnDelete();
             $table->integer('pushUpsResult')->nullable(); // Count
             $table->decimal('sitAndReachResult', 5, 2)->nullable(); // Centimeters
-            $table->integer('threeMinStepResult')->nullable(); // Heart rate / Beats per minute
+            $table->integer('threeMinStepBeforeResult')->nullable(); // Heart rate / Beats per minute
+            $table->integer('threeMinStepAfterResult')->nullable(); // Heart rate / Beats per minute
             $table->decimal('plankTestResult', 5, 2)->nullable();
         });
     }

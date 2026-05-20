@@ -26,7 +26,8 @@ class SkillsFitness extends Model
         'standingLongJumpResult' => 'float',
         'hexagonAgilityResult' => 'float',
         'fortyMeterSprinthResult' => 'float',
-        'storkBalanceStandResult' => 'float',
+        'leftStorkBalanceStandResult' => 'float',
+        'rightStorkBalanceStandResult' => 'float',
         'jugglingResult' => 'float',
     ];
 

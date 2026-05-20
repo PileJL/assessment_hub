@@ -22,6 +22,8 @@ class ApplicantForm extends Form
     public $height;
     #[Validate('required|numeric|min:10|max:500')]
     public $weight;
+    #[Validate('required|string')]
+    public $remarks;
 
     /** Skills Fitness Results */
     #[Validate('required|numeric|min:0')]
@@ -33,7 +35,9 @@ class ApplicantForm extends Form
     #[Validate('required|numeric|min:0')]
     public $fortyMeterSprinthResult;
     #[Validate('required|numeric|min:0')]
-    public $storkBalanceStandResult;
+    public $leftStorkBalanceStandResult;
+    #[Validate('required|numeric|min:0')]
+    public $rightStorkBalanceStandResult;
     #[Validate('required|numeric|min:0')]
     public $jugglingResult;
 
@@ -43,7 +47,9 @@ class ApplicantForm extends Form
     #[Validate('required|numeric|min:0')]
     public $sitAndReachResult;
     #[Validate('required|integer|min:0')]
-    public $threeMinStepResult;
+    public $threeMinStepBeforeResult;
+    #[Validate('required|numeric|min:0')]
+    public $threeMinStepAfterResult;
     #[Validate('required|numeric|min:0')]
     public $plankTestResult;
 
@@ -55,6 +61,7 @@ class ApplicantForm extends Form
         $this->fullName = $this->applicant->fullName;
         $this->height = $this->applicant->height;
         $this->weight = $this->applicant->weight;
+        $this->remarks = $this->applicant->remarks;
 
         $skills = $this->applicant->skillsFitness;
         if ($skills) {
@@ -62,7 +69,8 @@ class ApplicantForm extends Form
             $this->standingLongJumpResult = $skills->standingLongJumpResult;
             $this->hexagonAgilityResult = $skills->hexagonAgilityResult;
             $this->fortyMeterSprinthResult = $skills->fortyMeterSprinthResult;
-            $this->storkBalanceStandResult = $skills->storkBalanceStandResult;
+            $this->leftStorkBalanceStandResult = $skills->leftStorkBalanceStandResult;
+            $this->rightStorkBalanceStandResult = $skills->rightStorkBalanceStandResult;
             $this->jugglingResult = $skills->jugglingResult;
         }
 
@@ -70,7 +78,8 @@ class ApplicantForm extends Form
         if ($health) {
             $this->pushUpsResult = $health->pushUpsResult;
             $this->sitAndReachResult = $health->sitAndReachResult;
-            $this->threeMinStepResult = $health->threeMinStepResult;
+            $this->threeMinStepBeforeResult = $health->threeMinStepBeforeResult;
+            $this->threeMinStepAfterResult = $health->threeMinStepAfterResult;
             $this->plankTestResult = $health->plankTestResult;
         }
     }
@@ -81,14 +90,14 @@ class ApplicantForm extends Form
 
         DB::transaction(function () {
             // 1. Create the Applicant
-            $applicant = Applicant::create($this->only('applicantID', 'fullName', 'height', 'weight') + ['timestampCreatedAt' => now()]);
+            $applicant = Applicant::create($this->only('applicantID', 'fullName', 'height', 'weight', 'remarks') + ['timestampCreatedAt' => now()]);
 
             // 2. Create the Skills Fitness Record
             $applicant->skillsFitness()->create($this->only('stickDropTestResult', 'standingLongJumpResult', 'hexagonAgilityResult', 'fortyMeterSprinthResult',
-                'storkBalanceStandResult', 'jugglingResult'));
+                'leftStorkBalanceStandResult', 'rightStorkBalanceStandResult', 'jugglingResult'));
 
             // 3. Create the Health Fitness Record
-            $applicant->healthFitness()->create($this->only('pushUpsResult', 'sitAndReachResult', 'threeMinStepResult', 'plankTestResult'));
+            $applicant->healthFitness()->create($this->only('pushUpsResult', 'sitAndReachResult', 'threeMinStepBeforeResult', 'threeMinStepAfterResult', 'plankTestResult'));
         });
 
         $this->reset();
@@ -100,27 +109,30 @@ class ApplicantForm extends Form
             'fullName' => 'required|string|min:3|max:255',
             'height' => 'required|numeric|min:0.5|max:3.0',
             'weight' => 'required|numeric|min:10|max:500',
+            'remarks' => 'required|string',
             'stickDropTestResult' => 'required|numeric|min:0',
             'standingLongJumpResult' => 'required|numeric|min:0',
             'hexagonAgilityResult' => 'required|numeric|min:0',
             'fortyMeterSprinthResult' => 'required|numeric|min:0',
-            'storkBalanceStandResult' => 'required|numeric|min:0',
+            'leftStorkBalanceStandResult' => 'required|numeric|min:0',
+            'rightStorkBalanceStandResult' => 'required|numeric|min:0',
             'jugglingResult' => 'required|numeric|min:0',
             'pushUpsResult' => 'required|integer|min:0',
             'sitAndReachResult' => 'required|numeric|min:0',
-            'threeMinStepResult' => 'required|integer|min:0',
+            'threeMinStepBeforeResult' => 'required|integer|min:0',
+            'threeMinStepAfterResult' => 'required|integer|min:0',
             'plankTestResult' => 'required|numeric|min:0',
         ]);
         DB::transaction(function () {
             // 1. Create the Applicant
-            $this->applicant->update($this->only('applicantID', 'fullName', 'height', 'weight') + ['timestampCreatedAt' => now()]);
+            $this->applicant->update($this->only('applicantID', 'fullName', 'height', 'weight', 'remarks') + ['timestampCreatedAt' => now()]);
 
             // 2. Create the Skills Fitness Record
             $this->applicant->skillsFitness()->update($this->only('stickDropTestResult', 'standingLongJumpResult', 'hexagonAgilityResult', 'fortyMeterSprinthResult',
-                'storkBalanceStandResult', 'jugglingResult'));
+                'leftStorkBalanceStandResult', 'rightStorkBalanceStandResult', 'jugglingResult'));
 
             // 3. Create the Health Fitness Record
-            $this->applicant->healthFitness()->update($this->only('pushUpsResult', 'sitAndReachResult', 'threeMinStepResult', 'plankTestResult'));
+            $this->applicant->healthFitness()->update($this->only('pushUpsResult', 'sitAndReachResult', 'threeMinStepBeforeResult', 'threeMinStepAfterResult', 'plankTestResult'));
         });
     }
 }

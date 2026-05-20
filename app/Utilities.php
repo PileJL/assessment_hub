@@ -65,8 +65,9 @@ trait Utilities
         else return 0;
     }
 
-    public function getStorkBalanceResult(float $result): int
+    public function getStorkBalanceResult(float $leftResult, float $rightResult): int
     {
+        $result = ($leftResult + $rightResult) / 2;
         if ($result >= 161 && $result <= 180) return 5;
         else if ($result >= 121 && $result <= 160) return 4;
         else if ($result >= 81 && $result <= 120) return 3;

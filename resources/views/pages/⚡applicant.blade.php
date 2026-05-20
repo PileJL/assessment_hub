@@ -146,7 +146,7 @@ new class extends Component
                     <x-table-row label="Standing Long Jump (cm)" :value="$this->getStandingLongJumpResult($applicant->skillsFitness->standingLongJumpResult)"/>
                     <x-table-row label="Hexagon Agility Test (sec)" :value="$this->getHexagonAgilityResult($applicant->skillsFitness->hexagonAgilityResult)"/>
                     <x-table-row label="40-Meter Sprint (sec)" :value="$this->get40meterSprintResult($applicant->skillsFitness->fortyMeterSprinthResult)"/>
-                    <x-table-row label="Stork Balance Stand (sec)" :value="$this->getStorkBalanceResult($applicant->skillsFitness->storkBalanceStandResult)"/>
+                    <x-table-row label="Stork Balance Stand (sec)" :value="$this->getStorkBalanceResult($applicant->skillsFitness->leftStorkBalanceStandResult, $applicant->skillsFitness->rightStorkBalanceStandResult)"/>
                 </tbody>
             </table>
         </div>
@@ -173,11 +173,21 @@ new class extends Component
                 <tbody class="divide-y divide-muted/10">
                     <x-table-row label="Push-ups (reps)" :value="$this->getPushUpResult($applicant->healthFitness->pushUpsResult)"/>
                     <x-table-row label="Sit and Reach (cm)" :value="$this->getSitAndReachResult($applicant->healthFitness->sitAndReachResult)"/>
-                    <x-table-row label="3-Min Step Test (bpm)" :value="$applicant->healthFitness->threeMinStepResult"/>
+                    <x-table-row label="3-Min Step Test (bpm)" :value="$applicant->healthFitness->threeMinStepBeforeResult . ' - ' . $applicant->healthFitness->threeMinStepAfterResult"/>
                     <x-table-row label="Plank (sec)" :value="$this->getPlankResult($applicant->healthFitness->plankTestResult)"/>
                 </tbody>
             </table>
         </div>
+
+        {{-- remarks --}}
+        @if ($applicant->remarks)
+        <div class="bg-white rounded-xl border border-muted/30 p-4 shadow-sm flex flex-col gap-4">
+            <div class="flex items-center justify-between">
+                <span class="text-primary text-md font-semibold">Remarks</span>
+            </div>
+            <div class="text-primary text-sm whitespace-pre-line">{{ $applicant->remarks }}</div>
+        </div>
+        @endif
         
         {{-- export button --}}
         <button wire:click="export" wire:loading.attr="disabled" class="w-full font-semibold text-white text-md rounded-lg bg-secondary py-2.5 hover:cursor-pointer flex gap-2 items-center justify-center">

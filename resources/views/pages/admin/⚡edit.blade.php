@@ -49,7 +49,6 @@ new class extends Component
 
         <div class="flex justify-between items-center">
             <div class="text-primary font-bold text-md w-full mb-2">BMI</div>
-            <flux:badge color="zinc">20%</flux:badge>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
@@ -62,7 +61,6 @@ new class extends Component
     <div class="flex flex-col gap-3 rounded-xl border border-muted/30 p-6 bg-white w-full">
         <div class="flex justify-between items-center">
             <div class="text-primary font-bold text-md w-full mb-2">Skills-Related Fitness</div>
-            <flux:badge color="zinc">40%</flux:badge>
         </div>
         
         <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
@@ -75,17 +73,17 @@ new class extends Component
             <x-label-input label="40-Meter Sprint (sec)" propertyName="form.fortyMeterSprinthResult" type="text" placeholder="0.0" />
         </div>
 
-        <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
-            <x-label-input label="Stork Balance Stand Test (sec)" propertyName="form.storkBalanceStandResult" type="text" placeholder="0.0" />
-            <x-label-input label="Juggling (sec)" propertyName="form.jugglingResult" type="text" placeholder="0.0" />
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <x-label-input label="Left - Stork Balance Stand Test (sec)" propertyName="form.leftStorkBalanceStandResult" type="text" placeholder="0.0" />
+            <x-label-input label="Right - Stork Balance Stand Test (sec)" propertyName="form.rightStorkBalanceStandResult" type="text" placeholder="0.0" />
         </div>
+        <x-label-input label="Juggling (sec)" propertyName="form.jugglingResult" type="text" placeholder="0.0" />
     </div>
 
     {{-- health-related fitness --}}
     <div class="flex flex-col gap-3 rounded-xl border border-muted/30 p-6 bg-white w-full">
         <div class="flex justify-between items-center">
             <div class="text-primary font-bold text-md w-full mb-2">Health-Related Fitness</div>
-            <flux:badge color="zinc">40%</flux:badge>
         </div>
         
         <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
@@ -93,10 +91,16 @@ new class extends Component
             <x-label-input label="Sit and Reach (cm)" propertyName="form.sitAndReachResult" type="text" placeholder="0.0" />
         </div>
 
-        <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
-            <x-label-input label="3-Min Step Test (bpm)" propertyName="form.threeMinStepResult" type="number" placeholder="0" />
-            <x-label-input label="Plank (sec)" propertyName="form.plankTestResult" type="text" placeholder="0.0" />
+        <div class="flex gap-4">
+            <x-label-input label="3-Min Step Test (bpm)" propertyName="form.threeMinStepBeforeResult" type="text" placeholder="0" />
+            <x-label-input label="3-Min Step Test (bpm)" propertyName="form.threeMinStepAfterResult" type="text" placeholder="0" />
         </div>
+        <x-label-input label="Plank (sec)" propertyName="form.plankTestResult" type="text" placeholder="0.0" />
+    </div>
+
+    <div class="flex flex-col gap-2 rounded-xl border border-muted/30 p-6 bg-white w-full">
+        <div class="text-primary font-bold text-md w-full mb-2">Remarks</div>
+        <textarea wire:model="form.remarks" class="w-full border border-muted/30 rounded-lg p-3 text-sm" rows="3" placeholder="Enter remarks..."></textarea>
     </div>
 
     <button type="submit" wire:loading.attr="disabled" class="w-full font-semibold text-white text-md rounded-lg bg-secondary py-2.5 hover:cursor-pointer flex gap-2 items-center justify-center">
