@@ -91,9 +91,9 @@ new class extends Component
             <x-label-input label="Sit and Reach (cm)" propertyName="form.sitAndReachResult" type="text" placeholder="0.0" />
         </div>
 
-        <div class="flex gap-4">
-            <x-label-input label="3-Min Step Test (bpm)" propertyName="form.threeMinStepBeforeResult" type="text" placeholder="0" />
-            <x-label-input label="3-Min Step Test (bpm)" propertyName="form.threeMinStepAfterResult" type="text" placeholder="0" />
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <x-label-input label="3-Min Step Test Before (bpm)" propertyName="form.threeMinStepBeforeResult" type="text" placeholder="0" />
+            <x-label-input label="3-Min Step Test After (bpm)" propertyName="form.threeMinStepAfterResult" type="text" placeholder="0" />
         </div>
         <x-label-input label="Plank (sec)" propertyName="form.plankTestResult" type="text" placeholder="0.0" />
     </div>
