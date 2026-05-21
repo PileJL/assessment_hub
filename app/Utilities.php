@@ -25,8 +25,10 @@ trait Utilities
         };
     }
 
-    public function getStickDropTestResult(float $result): int
+    public function getStickDropTestResult($result): ?int
     {
+        if (!is_numeric($result)) return null;
+        $result = (float)$result;
         if ($result >= 0 && $result <= 2.4) return 5;
         else if ($result >= 5.08 && $result <= 10.16) return 4;
         else if ($result >= 12.70 && $result <= 17.78) return 3;
@@ -35,8 +37,10 @@ trait Utilities
         else return 0;
     }
 
-    public function getStandingLongJumpResult(float $result): int
+    public function getStandingLongJumpResult($result): ?int
     {
+        if (!is_numeric($result)) return null;
+        $result = (float)$result;
         if ($result >= 201) return 5;
         else if ($result >= 151 && $result <= 200) return 4;
         else if ($result >= 126 && $result <= 150) return 3;
@@ -45,8 +49,10 @@ trait Utilities
         else return 0;
     }
 
-    public function getHexagonAgilityResult(float $result): int
+    public function getHexagonAgilityResult($result): ?int
     {
+        if (!is_numeric($result)) return null;
+        $result = (float)$result;
         if ($result <= 5) return 5;
         else if ($result >= 6 && $result <= 10) return 4;
         else if ($result >= 11 && $result <= 15) return 3;
@@ -55,8 +61,10 @@ trait Utilities
         else return 0;
     }
 
-    public function get40meterSprintResult(float $result): int
+    public function get40meterSprintResult($result): ?int
     {
+        if (!is_numeric($result)) return null;
+        $result = (float)$result;
         if ($result <= 4.5) return 5;
         else if ($result >= 4.6 && $result <= 5.9) return 4;
         else if ($result >= 6.0 && $result <= 7.0) return 3;
@@ -65,8 +73,11 @@ trait Utilities
         else return 0;
     }
 
-    public function getStorkBalanceResult(float $leftResult, float $rightResult): int
+    public function getStorkBalanceResult($leftResult, $rightResult): ?int
     {
+        if (!is_numeric($leftResult) || !is_numeric($rightResult)) return null;
+        $leftResult = (float)$leftResult;
+        $rightResult = (float)$rightResult;
         $result = ($leftResult + $rightResult) / 2;
         if ($result >= 161 && $result <= 180) return 5;
         else if ($result >= 121 && $result <= 160) return 4;
@@ -76,8 +87,10 @@ trait Utilities
         else return 0;
     }
 
-    public function getJugglingResult(float $result): int
+    public function getJugglingResult($result): ?int
     {
+        if (!is_numeric($result)) return null;
+        $result = (float)$result;
         if ($result >= 41) return 5;
         else if ($result >= 31 && $result <= 40) return 4;
         else if ($result >= 21 && $result <= 30) return 3;
@@ -86,8 +99,10 @@ trait Utilities
         else return 0;
     }
 
-    public function getPushUpResult(float $result): int
+    public function getPushUpResult($result): ?int
     {
+        if (!is_numeric($result)) return null;
+        $result = (float)$result;
         if ($result >= 33) return 5;
         else if ($result >= 25 && $result <= 32) return 4;
         else if ($result >= 17 && $result <= 24) return 3;
@@ -96,8 +111,10 @@ trait Utilities
         else return 0;
     }
 
-    public function getSitAndReachResult(float $result): int
+    public function getSitAndReachResult($result): ?int
     {
+        if (!is_numeric($result)) return null;
+        $result = (float)$result;
         if ($result >= 61) return 5;
         else if ($result >= 46 && $result <= 60.9) return 4;
         else if ($result >= 31 && $result <= 45.9) return 3;
@@ -106,8 +123,10 @@ trait Utilities
         else return 0;
     }
 
-    public function getPlankResult(float $result): int
+    public function getPlankResult($result): ?int
     {
+        if (!is_numeric($result)) return null;
+        $result = (float)$result;
         if ($result >= 51) return 5;
         else if ($result >= 46 && $result <= 50) return 4;
         else if ($result >= 31 && $result <= 45) return 3;
@@ -116,7 +135,7 @@ trait Utilities
         else return 0;
     }
 
-    public function getScoreEquivalent(int $score): string
+    public function getScoreEquivalent($score): string
     {
         if ($score === 5) return 'Excellent';
         else if ($score === 4) return 'Very Good';

@@ -185,7 +185,7 @@ new class extends Component
             <div class="flex items-center justify-between">
                 <span class="text-primary text-md font-semibold">Remarks</span>
             </div>
-            <div class="text-primary text-sm whitespace-pre-line">{{ $applicant->remarks }}</div>
+            <div class="text-primary whitespace-pre-line">{{ $applicant->remarks }}</div>
         </div>
         @endif
         

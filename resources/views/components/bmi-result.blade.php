@@ -10,6 +10,6 @@
     };
 @endphp
 
-<div class="{{ $bgClass }} rounded-xl text-white font-semibold text-xs px-2 py-0.5 w-fit items-center">
+<div class="{{ $bgClass }} rounded-xl text-white font-semibold text-xs px-2 py-0.5 w-fit h-fit items-center whitespace-nowrap">
     {{ $result }}
 </div>
