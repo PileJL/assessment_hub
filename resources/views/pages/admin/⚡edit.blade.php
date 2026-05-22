@@ -138,7 +138,7 @@ new class extends Component
     {{-- delete with confirmation --}}
     <div x-data="{ confirmDelete: false }">
         <button @click="confirmDelete = true" wire:loading.attr="disabled" class="w-full mt-3 font-semibold text-white text-md rounded-lg bg-red py-2.5 hover:cursor-pointer flex gap-2 items-center justify-center">
-            <span wire:loading.remove><x-icons.save size="size-6"/></span>
+            <span wire:loading.remove><x-icons.delete/></span>
             <span wire:loading.remove>Delete Record</span>
             <span wire:loading>Deleting Record...</span>
         </button>
