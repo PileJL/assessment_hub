@@ -2,9 +2,11 @@
 
 use Livewire\Component;
 use App\Livewire\Forms\ApplicantForm;
+use App\Utilities;
 
 new class extends Component
 {
+    use Utilities;
     public ApplicantForm $form;
 
     public function save()
@@ -43,9 +45,12 @@ new class extends Component
         </div>
 
         <hr class="text-muted/30 mt-2">
-        {{-- bmi title --}}
-        <div class="flex justify-between items-center">
-            <div class="text-primary font-bold text-md w-full mb-2">BMI</div>
+        {{-- bmi title and result --}}
+        <div class="flex flex-col gap-1 sm:flex-row sm:justify-between">
+            <div class="text-primary font-bold text-md">BMI</div>
+            @if ($form->height && $form->weight)
+                <x-bmi-result result="{{ $this->getBMICategory($form->weight, $form->height) }}"/>
+            @endif
         </div>
         {{-- bmi inputs --}}
         <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
@@ -62,25 +67,31 @@ new class extends Component
         </div>
         {{-- stick drop and standing long jump inputs --}}
         <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
-            <x-label-input label="Stick Drop Test (cm)" propertyName="form.stickDropTestResult" type="text" placeholder="0.0" />
-            <x-label-input label="Standing Long Jump (cm)" propertyName="form.standingLongJumpResult" type="text" placeholder="0.0" />
+            <x-label-input label="Stick Drop Test (cm)" propertyName="form.stickDropTestResult" type="text" placeholder="0.0" :result="$this->getStickDropTestResult($form->stickDropTestResult)"/>
+            <x-label-input label="Standing Long Jump (cm)" propertyName="form.standingLongJumpResult" type="text" placeholder="0.0" :result="$this->getStandingLongJumpResult($form->standingLongJumpResult)" />
         </div>
         {{-- hexagon and 40-meter inputs --}}
         <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
-            <x-label-input label="Hexagon Agility Test (sec)" propertyName="form.hexagonAgilityResult" type="text" placeholder="0.0" />
-            <x-label-input label="40-Meter Sprint (sec)" propertyName="form.fortyMeterSprinthResult" type="text" placeholder="0.0" />
+            <x-label-input label="Hexagon Agility Test (sec)" propertyName="form.hexagonAgilityResult" type="text" placeholder="0.0" :result="$this->getHexagonAgilityResult($form->hexagonAgilityResult)" />
+            <x-label-input label="40-Meter Sprint (sec)" propertyName="form.fortyMeterSprinthResult" type="text" placeholder="0.0" :result="$this->get40meterSprintResult($form->fortyMeterSprinthResult)" />
         </div>
-        {{-- stock balance inputs --}}
+        {{-- stork balance inputs --}}
         <div class="flex flex-col gap-3 sm:gap-4">
             {{-- label --}}
-            <label class="text-primary font-semibold text-sm w-full tracking-wide">Stork Balance Stand Test (sec)</label>
+            <div class="flex flex-col gap-1 sm:flex-row sm:justify-between">
+                <label class="text-primary font-semibold text-sm w-full tracking-wide">Stork Balance Stand Test (sec)</label>
+                @if ($form->leftStorkBalanceStandResult && $form->rightStorkBalanceStandResult)
+                    <x-interpretation-badge :result="$this->getStorkBalanceResult($form->leftStorkBalanceStandResult, $form->rightStorkBalanceStandResult)" />
+                @endif
+            </div>
             {{-- inputs --}}
             <div class="flex gap-4">
                 <x-label-input label="Left Foot" propertyName="form.leftStorkBalanceStandResult" type="text" placeholder="0.0" />
                 <x-label-input label="Right Foot" propertyName="form.rightStorkBalanceStandResult" type="text" placeholder="0.0" />
             </div>
         </div>
-        <x-label-input label="Juggling (sec)" propertyName="form.jugglingResult" type="text" placeholder="0.0" />
+        {{-- Juggling --}}
+        <x-label-input label="Juggling (sec)" propertyName="form.jugglingResult" type="text" placeholder="0.0" :result="$this->getJugglingResult($form->jugglingResult)" />
     </div>
 
     {{-- health-related fitness --}}
@@ -91,8 +102,8 @@ new class extends Component
         </div>
         {{-- push-ups and sit and reach inputs --}}
         <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
-            <x-label-input label="Push-ups (reps)" propertyName="form.pushUpsResult" type="text" placeholder="0" />
-            <x-label-input label="Sit and Reach (cm)" propertyName="form.sitAndReachResult" type="text" placeholder="0.0" />
+            <x-label-input label="Push-ups (reps)" propertyName="form.pushUpsResult" type="number" placeholder="0" :result="$this->getPushUpResult($form->pushUpsResult)" />
+            <x-label-input label="Sit and Reach (cm)" propertyName="form.sitAndReachResult" type="text" placeholder="0.0" :result="$this->getSitAndReachResult($form->sitAndReachResult)" />
         </div>
         {{-- 3-min step --}}
         <div class="flex flex-col gap-3 sm:gap-4">
@@ -104,7 +115,7 @@ new class extends Component
                 <x-label-input label="After" propertyName="form.threeMinStepAfterResult" type="text" placeholder="0" />
             </div>
         </div>
-        <x-label-input label="Plank (sec)" propertyName="form.plankTestResult" type="text" placeholder="0.0" />
+        <x-label-input label="Plank (sec)" propertyName="form.plankTestResult" type="text" placeholder="0.0" :result="$this->getPlankResult($form->plankTestResult)" />
     </div>
 
     <div class="flex flex-col gap-2 rounded-xl border border-muted/30 p-6 bg-white w-full">

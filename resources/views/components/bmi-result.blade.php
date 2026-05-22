@@ -4,7 +4,7 @@
     $bgClass = match ($result) {
         'Underweight' => 'bg-orange',
         'Normal'      => 'bg-green',
-        'Overweight'  => 'bg-yellow',
+        'Overweight'  => 'bg-yellow-400',
         'Obese'       => 'bg-red',
         default       => 'bg-gray-500',
     };

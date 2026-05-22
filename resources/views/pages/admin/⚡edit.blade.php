@@ -89,6 +89,7 @@ new class extends Component
                 <x-label-input label="Right Foot" propertyName="form.rightStorkBalanceStandResult" type="text" placeholder="0.0" />
             </div>
         </div>
+        {{-- juggling --}}
         <x-label-input label="Juggling (sec)" propertyName="form.jugglingResult" type="text" placeholder="0.0" :result="$this->getJugglingResult($form->jugglingResult)" />
     </div>
 

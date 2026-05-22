@@ -12,7 +12,7 @@
         <label class="text-primary font-semibold text-xs w-full tracking-wide">{{ $label }}</label>
         @if ($result !== null) <x-interpretation-badge :result="$result" /> @endif
     </div>
-    <input wire:model="{{ $propertyName }}" type="{{ $type }}" placeholder="{{ $placeholder }}" @if($readonly) readonly @endif
+    <input wire:model.live="{{ $propertyName }}" type="{{ $type }}" placeholder="{{ $placeholder }}" @if($readonly) readonly @endif
         class="mt-2 w-full border border-muted/30 bg-background rounded-lg px-3 py-2 font-normal text-xs text-primary focus:border-secondary/50 focus:ring-1 focus:ring-secondary/50">
     {{-- Validation Error Message --}}
     @error($propertyName)
