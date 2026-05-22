@@ -12,8 +12,10 @@ new class extends Component
     public function save()
     {
         $this->form->save();
-        // Dispatch event to the browser
         $this->dispatch('show-toast', message: 'Applicant record saved successfully!');
+
+        $url = route('admin-dashboard');
+        $this->js("setTimeout(() => Livewire.navigate('{$url}'), 1000)");
     }
 };
 ?>

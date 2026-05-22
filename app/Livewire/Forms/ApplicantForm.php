@@ -135,4 +135,9 @@ class ApplicantForm extends Form
             $this->applicant->healthFitness()->update($this->only('pushUpsResult', 'sitAndReachResult', 'threeMinStepBeforeResult', 'threeMinStepAfterResult', 'plankTestResult'));
         });
     }
+
+    public function delete()
+    {
+        $this->applicant->delete();
+    }
 }
